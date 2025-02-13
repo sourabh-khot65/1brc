@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"bufio"
 	"os"
 
 	"github.com/sirupsen/logrus"
@@ -20,7 +21,10 @@ func ProcessData(filePath string) error {
 	}
 	fileSize := stat.Size()
 	buffer := make([]byte, fileSize)
-	_, err = file.Read(buffer)
+
+	// Use bufio to read the file
+	reader := bufio.NewReader(file)
+	_, err = reader.Read(buffer)
 	if err != nil {
 		logrus.Errorf("Error reading file: %v", err)
 		return err
