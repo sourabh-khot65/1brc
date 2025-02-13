@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"time"
+	"os"
 
+	"github.com/sourabh-khot65/1brc/internal"
 	"github.com/sourabh-khot65/1brc/profiling"
 )
 
@@ -19,9 +19,12 @@ func main() {
 		profiling.StopCPUProfiling()
 		profileFile.Close()
 	}()
-
-	// Simulate workload
-	time.Sleep(5 * time.Second)
-
-	fmt.Println("Application finished. CPU profile saved to benchmarks/cpu.prof")
+	if len(os.Args) != 2 {
+		log.Fatalf("Missing measurements filename")
+	}
+	fileName := os.Args[1]
+	err = internal.ProcessData(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
