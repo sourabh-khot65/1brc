@@ -25,3 +25,11 @@ To get started with 1brc:
    ```sh
    git clone https://github.com/sourabh-khot65/1brc.git
    cd 1brc
+   ```
+
+2. **Run the application:**
+   The application requires a filename as a command-line argument. You can run the application using the following command:
+   ```sh
+   go run main.go <filename>
+   ```
+   Replace `<filename>` with the path to the data file you want to process.
