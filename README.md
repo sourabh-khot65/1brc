@@ -32,4 +32,31 @@ To get started with 1brc:
    ```sh
    go run main.go <filename>
    ```
-   Replace `<filename>` with the path to the data file you want to process.
+   Replace `<filename>` with the path to the data file you want to process. The data file should contain city names and temperatures in the following format:
+   ```
+   CityName;Temperature
+   ```
+
+3. **Output:**
+   After processing the data, the application will print the minimum, maximum, average temperatures, and count of entries for each city to the console.
+
+### Example Data File
+Your data file should look something like this:
+
+```
+New York;30
+Los Angeles;25
+New York;35
+Chicago;20
+Los Angeles;28
+```
+
+### Approach (Attempt 1)
+In this initial attempt, the project focuses on efficiently processing temperature data for various cities. The approach includes:
+
+- **Data Parsing**: The application reads a file containing city names and their corresponding temperatures, ensuring that the data is correctly formatted.
+- **Temperature Calculations**: For each city, the application calculates the minimum, maximum, and average temperatures, as well as the count of temperature entries.
+- **Error Handling**: The implementation includes error handling to manage malformed lines in the input data and parsing errors.
+- **Output**: The results are printed to the console, providing a clear summary of the temperature statistics for each city.
+
+This approach serves as a foundational step towards building a more robust data processing system capable of handling larger datasets and more complex analyses in future iterations.
