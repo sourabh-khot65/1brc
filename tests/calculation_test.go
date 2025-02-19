@@ -24,6 +24,8 @@ func TestCalculateCityTemperatureMeasurements(t *testing.T) {
 		{"Los Angeles", "35", "35", "35", "35.00", 1, false},
 		{"Chicago", "-10", "-10", "-10", "-10.00", 1, false},
 		{"Chicago", "invalid", "", "", "", 0, true},
+		{"Extreme City", "1000", "1000", "1000", "1000.00", 1, false},
+		{"Extreme City", "-1000", "-1000", "1000", "-0.00", 2, false},
 	}
 
 	for _, test := range tests {
