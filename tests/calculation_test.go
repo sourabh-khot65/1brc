@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/sourabh-khot65/1brc/entity"
@@ -13,23 +14,28 @@ func TestCalculateCityTemperatureMeasurements(t *testing.T) {
 	tests := []struct {
 		cityName      string
 		temperature   string
-		expectedMin   string
-		expectedMax   string
-		expectedAvg   string
+		expectedMin   float64
+		expectedMax   float64
+		expectedAvg   float64
 		expectedCount int64
 		expectError   bool
 	}{
-		{"New York", "30", "30", "30", "30.00", 1, false},
-		{"New York", "25", "25", "30", "27.50", 2, false},
-		{"Los Angeles", "35", "35", "35", "35.00", 1, false},
-		{"Chicago", "-10", "-10", "-10", "-10.00", 1, false},
-		{"Chicago", "invalid", "", "", "", 0, true},
-		{"Extreme City", "1000", "1000", "1000", "1000.00", 1, false},
-		{"Extreme City", "-1000", "-1000", "1000", "-0.00", 2, false},
+		{"New York", "30", 30, 30, 30.00, 1, false},
+		{"New York", "25", 25, 30, 27.50, 2, false},
+		{"Los Angeles", "35", 35, 35, 35.00, 1, false},
+		{"Chicago", "-10", -10, -10, -10.00, 1, false},
+		{"Chicago", "invalid", 0, 0, 0, 0, true},
+		{"Extreme City", "1000", 1000, 1000, 1000.00, 1, false},
+		{"Extreme City", "-1000", -1000, 1000, -0.00, 2, false},
 	}
 
 	for _, test := range tests {
-		err := internal.CalculateCityTemperatureMeasurements(cityMap, test.cityName, test.temperature)
+		tempValue, err := strconv.ParseFloat(test.temperature, 64)
+		if err != nil {
+			t.Errorf("Error parsing temperature for %s: %v", test.cityName, err)
+		}
+
+		err = internal.CalculateCityTemperatureMeasurements(cityMap, test.cityName, tempValue)
 
 		if test.expectError {
 			if err == nil {
@@ -44,7 +50,7 @@ func TestCalculateCityTemperatureMeasurements(t *testing.T) {
 
 		measurements := cityMap[test.cityName]
 		if measurements.Min != test.expectedMin || measurements.Max != test.expectedMax || measurements.Avg != test.expectedAvg || measurements.Count != test.expectedCount {
-			t.Errorf("For city %s, expected Min: %s, Max: %s, Avg: %s, Count: %d; got Min: %s, Max: %s, Avg: %s, Count: %d",
+			t.Errorf("For city %s, expected Min: %.2f, Max: %.2f, Avg: %.2f, Count: %d; got Min: %.2f, Max: %.2f, Avg: %.2f, Count: %d",
 				test.cityName, test.expectedMin, test.expectedMax, test.expectedAvg, test.expectedCount,
 				measurements.Min, measurements.Max, measurements.Avg, measurements.Count)
 		}
